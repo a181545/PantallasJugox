@@ -1,0 +1,11 @@
+C:\Users\jugxx\source\repos\PruebaForms1\PruebaForms1\bin\Debug\PruebaForms1.exe.config
+C:\Users\jugxx\source\repos\PruebaForms1\PruebaForms1\bin\Debug\PruebaForms1.exe
+C:\Users\jugxx\source\repos\PruebaForms1\PruebaForms1\bin\Debug\PruebaForms1.pdb
+C:\Users\jugxx\source\repos\PruebaForms1\PruebaForms1\obj\Debug\PruebaForms1.csproj.AssemblyReference.cache
+C:\Users\jugxx\source\repos\PruebaForms1\PruebaForms1\obj\Debug\PruebaForms1.csproj.SuggestedBindingRedirects.cache
+C:\Users\jugxx\source\repos\PruebaForms1\PruebaForms1\obj\Debug\PruebaForms1.PruebaTextCB.resources
+C:\Users\jugxx\source\repos\PruebaForms1\PruebaForms1\obj\Debug\PruebaForms1.Properties.Resources.resources
+C:\Users\jugxx\source\repos\PruebaForms1\PruebaForms1\obj\Debug\PruebaForms1.csproj.GenerateResource.cache
+C:\Users\jugxx\source\repos\PruebaForms1\PruebaForms1\obj\Debug\PruebaForms1.csproj.CoreCompileInputs.cache
+C:\Users\jugxx\source\repos\PruebaForms1\PruebaForms1\obj\Debug\PruebaForms1.exe
+C:\Users\jugxx\source\repos\PruebaForms1\PruebaForms1\obj\Debug\PruebaForms1.pdb
