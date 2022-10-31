@@ -1,0 +1,162 @@
+-------------------------------------------------------------------------------------------------------------
+
+Vistas SQL:
+Son tablas alternativas diseñadas para mostrar solo algunos datos al usuario, ocultando la demás información.
+
+Sintaxis:
+create view nombre_vista as
+--Sentencia (solo se permite una)
+
+select * from nombre_vista
+
+Eliminación de vistas:
+drop view nombre_vista
+--Si las vistas contienen dependencias, no se podrán eliminar
+
+Update y delete en vistas(solo selecciones):
+Al ejecutar una vista, aparece la tabla similar a la selección de datos, pero solo observa las columnas que
+fueron elegidas por la vista.
+
+-------------------------------------------------------------------------------------------------------------
+
+sp_helptext:
+Muestra las sentencias utilizadas en la vista.
+
+Sintaxis: sp_helptext nombre_vissta
+
+Para encriptar las sentencias de una vista usamos la sig. sintaxis:
+create view nombre_vista with encryption as
+--Sentencia (solo se permite una)
+
+-------------------------------------------------------------------------------------------------------------
+
+Procedimientos almacenados:
+Conjunto de sentencias que se almacenan en el servidor SQL, que se usa en caso de que sea llamado.
+
+Sintaxis:
+--Para crear procedimientos:
+create procedure nombre_proc as
+--sentencias
+o
+create proc nombre_proc as
+--sentencias
+
+--Para ejecutar los procedimientos:
+exec nombre_proc
+o
+execute nombre_proc
+
+--Para crear procedimientos con variables escalares:
+create proc nombre_proc @variable tipodato(memoria/largo) as
+  //Sentencias
+
+--Ejecución:
+execute nombre_proc valor_var
+
+--Encriptación de procedimientos almacenados (sintaxis):
+create proc nombre_proc @variable(opcional)
+with encryption as
+//Sentencias
+
+//Usar sp_helptext para verificar el procedimiento
+
+--En caso de que se quiere modificar un procedimiento sin borrarlo:
+alter proc nombre_proc @variable(opcional)
+//Sentencias
+
+-------------------------------------------------------------------------------------------------------------
+
+---Condicionales---
+Estructura CASE (Ejemplo de sintaxis):
+
+select * = case edad
+when 17 then 'menor'
+when 18 then 'mayor'
+*
+*
+*
+end
+from usuarios --Si no se cumple la condición, regresa valores nulos (null).
+
+Otro ejemplo del uso de case que evalúa un rango de valores:
+
+select * = case
+when edad <= 17 then 'menor'
+when edad >= 18 then 'mayor'
+end
+from usuarios
+
+-------------------------------------------------------------------------------------------------------------
+
+Estructura IF (Ejemplo de sintaxis):
+
+if exists (select * from usuarios where edad >= 18)
+select * from usuarios where edad >= 18
+else
+select 'No hay mayores de 18'
+
+Otro ejemplo de sintaxis:
+
+if (@var1 < @var2)
+  begin
+    select 'Texto' - (Sentencias) - @nombreVariable //Uno de los tres
+  end
+else
+  begin
+    select 'Texto' - (Sentencias) - @nombreVariable //Uno de los tres
+  end
+
+-------------------------------------------------------------------------------------------------------------
+
+Declaración de Variables SQL:
+declare @nombreVariable TipoDato
+
+Inserción de datos en las variables:
+set @nombreVariable =valores o sentencias
+
+Otra forma de declarar una variable (Ejemplo de tarea):
+
+-------------------------------------------------------------------------------------------------------------
+
+Triggers o disparadores:
+Procedimiento que se ejecuta al modificar una tabla o vista. Indispensable para la integridad de los datos.
+
+Sintaxis:
+
+create trigger nombre_trigger
+ON tabla for (insert, update o delete)
+as
+//Sentencias
+
+Ejemplo 1 (Evita la inserción de un producto en la tabla si este tenia un precio inicial mayor de 4500):
+
+create trigger PrecioM_4500
+on producto for insert
+as
+declare @pTemp smallmoney
+select @pTemp = precio from inserted*  --Inserted: tabla temporal que mantiene una copia de los registros
+				       --a insertar. Es usado en los triggers para verificar los datos
+if @pTemp >=4500                       --antes de ser introducidos en la tabla final
+begin
+	*raiseerror('Es mayor a 4500', severidad(en este caso el num 16), estado_error(en este caso el num 1))
+	--raiseerror: Levanta un error debido a un valor detectado por un trigger.
+	*rollback transaction
+	--Rollback transaction: Revierte una transaction debido a cierta condición de un trigger.
+end
+
+
+Ejemplo 2 (cambia el precio de un producto insertado a 1200 si este tenia un precio inicial mayor de 4500):
+
+create trigger PrecioM_4500
+on producto for insert
+as
+declare @pTemp smallmoney
+select @pTemp = precio from inserted* 
+if @pTemp >=4500
+update producto set precio = 1200 from producto PRO JOIN inserted ON PRO.codigo = inserted.codigo
+where PRO.codigo = inserted.codigo
+
+Eliminación de un trigger:
+drop trigger nombre_trigger
+
+-------------------------------------------------------------------------------------------------------------

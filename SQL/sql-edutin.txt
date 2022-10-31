@@ -1,0 +1,81 @@
+bases de datos estaticas: de solo lectura
+base de datos dinamicas: de lectura y escritura
+
+cambiar la contraseña del sa:
+alter login sa with password = 'contraseña'
+
+habilitar/deshabilitar sa:
+alter login sa enable / disable
+
+crear logins:
+create login nombre_usuario_login with password = 'contraseña' 
+
+opcional despues de la contraseña:
+create login nombre_usuario_login with password = 'contraseña' must_change, 
+default_database = master (por ejemplo), default_language= Español, check_expiration = on u off
+
+logins para equipos:
+create login [DESKTOP-XXXXXXX\Usuario] from windows with default_database = master (por ejemplo), 
+default_language= Español
+
+eliminar login:
+drop login nombre_usuario_login
+--es necesario "matar los procesos" en caso de que el usuario a eliminar este activo
+
+creacion de usuarios para una bd:
+create user nombre_usuario_user for login nombre_usuario_login with default_schema=dbo
+
+eliminacion de usuarios de una bd:
+drop user nombre_usuario_user
+--la base de datos tiene que estar seleccionada
+
+selección de base de datos:
+use base_datos
+
+para que varios usuarios manipulen una base de datos se usa:
+alter database base_datos set multi_user
+
+permisos para que un login cree una base de datos:
+grant create any database to nombre_usuario_login
+
+permiso para crear tablas (se necesita loguear en sa):
+grant create table to base_datos
+
+creaciòn de tablas (ejemplo):
+create table cliente
+(
+id int primary key identity, nombres nvarchar(50) not null, 
+apellidos nvarchar(50), 
+email nvarchar(50), 
+estatura decimal(3,2),
+sexo char(1),
+curp chae (32),
+estado bit
+)
+
+para ver detalles de una tabla:
+sp_help nombre_tabla
+
+alteración de tablas-agregar más columnas:
+alter table nombre_tabla add nombre_columna tipodato
+alter table nombre_tabla add nombre_columna tipodato, nombre_columna tipodato
+
+eliminación de columnas:
+alter table nombre_tabla drop column nombre_columna
+
+renombrar una columna:
+EXEC sp_RENAME 'nombre_tabla.columna_antigua', 'columna_nueva', 'COLUMN'
+
+cambiar tipos de datos de una columna:
+alter table nombre_tabla alter column nombre_columna tipo_dato
+
+asignaciòn de llaves primarias:
+nombre_columna tipo_dato not null PRIMARY KEY
+//las llaves foraneas deben de tener los mismos tipos de datos
+--en caso de tener tablas ya creadas:
+alter table tabla add constraint pk_nombre_columna primary key (columna)
+
+asignacion de llaves foraneas:
+constraint fk_nombre_llave foreign key (columna que sera la llave foranea) references tabla_relacionada(llave primaria)
+--en caso de tener tablas ya creadas:
+alter table tabla add constraint fk_nombre_llave foreign key (columna que sera la llave foranea) references tabla_relacionada(llave primaria)

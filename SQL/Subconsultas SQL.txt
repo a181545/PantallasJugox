@@ -1,0 +1,71 @@
+---------------------------------------------------------------------------------------------
+
+Seleccion de columnas en una consulta:
+
+select * from tabla1 (* selecciona todo el contenido)
+
+select columna1, columna2 from tabla1 (selecciona las columnas especificas de una tabla)
+
+select tabla1.columna1, tabla2.columna2 from tabla1, tabla2 
+(selecciona las columnas especificadas de ciertas tablas)
+
+---------------------------------------------------------------------------------------------
+
+Subconsultas con ANY y ALL
+
+ANY:
+Regresa las consultas que tienen un valor similar, es decir que los valores de una tabla sean similares
+cuando se selecciona otra tabla.
+
+Ejemplo explicado:
+
+select * from usuarios where sexo = 'F' and edad = any (select edad from usuarios where sexo = 'M') 
+order by edad
+(En este ejemplo se quiere consultar la tabla usuarios si es que el género de los usuarios es Femenino,
+y que la edad sea similar a la de los hombres (Masculino), se realiza una subconsulta de la edad dentro 
+de la sentencia any y la edad se ordena de forma ascendente)
+--Similar a la clausula IN
+
+ALL:
+Regresa las consultas que tienen un valor diferente, es decir que los valores de una tabla sean distintos
+cuando se selecciona otra tabla.
+
+Ejemplo explicado:
+
+select * from usuarios where sexo = 'F' and edad = <> all (select edad from usuarios where sexo = 'M') 
+order by edad
+(En este ejemplo se quiere consultar la tabla usuarios si es que el género de los usuarios es Femenino,
+y que la edad sea diferente a la de los hombres (Masculino), se realiza una subconsulta de la edad dentro 
+de la sentencia any y la edad se ordena de forma ascendente)
+--Similar a la clausula NOT IN
+
+------------------------Operaciones CRUD (Subconsultas)--------------------------------------
+
+UPDATE:
+Actualiza los datos de una tabla, dependiendo de la condición que se le de.
+
+Ejemplo:
+update usuarios set tipo_usuario = 'Root' where id_usuario = any (select id_usuario from usuarios
+where edad > 24)
+
+---------------------------------------------------------------------------------------------
+
+DELETE:
+Elimina las filas de una tabla de acuerdo a una condición dada.
+
+Ejemplo:
+delete usuarios where tipo_usuario = any (select tipo_usuario from usuarios
+where edad > 24)
+
+---------------------------------------------------------------------------------------------
+
+INSERT:
+Permite agregar datos a una tabla, en este caso, se pretende insertar los datos de otra tabla,
+es decir, se selecciona una tabla y luego se insertan los datos que fueron seleccionados de
+esa tabla a la otra tabla.
+
+Ejemplo:
+insert into Nombres (nombre)
+select (nombre) from usuarios
+
+---------------------------------------------------------------------------------------------

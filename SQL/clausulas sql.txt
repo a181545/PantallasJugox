@@ -1,0 +1,114 @@
+Clausulas:
+
+Ejemplo de WHERE:
+select * from producto where precio >=400
+--leera los produuctos que tengan el precio igual o mayor a 400
+------------------------------------------------------------------------
+
+ORDER BY:
+ordena las consultas de una forma determinada
+
+ejemplo:
+select * from producto order by precio DESC(descendente) o ASC(Ascendente)
+--si no se especifica la forma de ordenar, las consultas se ordenaran de forma ascendente
+
+select * from producto order by precio DESC, codigo DESC
+--ejemplo de dos formas de ordenamiento
+
+------------------------------------------------------------------------
+
+TOP:
+indica el top n puestos dependiendo de la instrucciòn a seguir
+
+ejemplo:
+select top 5 * from producto order by precio desc
+--selecciona los primeros 5 productos y los ordena de forma descendente
+
+------------------------------------------------------------------------
+
+BETWEEN:
+elige los valores entre un intervalo especificado
+
+ejemplo:
+select * from producto where precio BETWEEN 200 AND 450
+--elige los productos con los precios entre 200 y 250
+
+------------------------------------------------------------------------
+
+LIKE:
+elige los datos que contienen los caracteres o numeros pedidos por el usuario
+
+ejemplo
+select * from producto where nombre LIKE 'J%' (nombre que empieza con J)
+select * from producto where nombre LIKE '%J%' (nombre que tenga J ya sea al principio, entre el nombre o al final)
+select * from producto where nombre LIKE '%J' (nombre que tenga J al final)
+
+------------------------------------------------------------------------
+
+IN:
+regresa los datos cuyos valores cumplan con la condicion
+
+ejemplo:
+select * from producto where nombre IN ('Hugo')
+
+------------------------------------------------------------------------
+
+NOT IN:
+lo contrario a in
+
+ejemplo:
+select * from producto where nombre NOT IN ('Hugo')
+
+------------------------------------------------------------------------
+
+JOIN:
+une 2 tablas
+
+Ejemplos:
+select * from Clientes CLI JOIN Venta VE ON CLI.ncliente = VE.ncliente
+select CLI.nombre, VE.codproducto from Clientes CLI JOIN Venta VE ON CLI.ncliente = VE.ncliente
+
+CLI y VE son alias de las tablas Clientes y Venta respectivamente
+
+------------------------------------------------------------------------
+
+SUM()
+
+realiza la suma de los valores de una columna
+
+Ejemplo:
+select sum(monto) from pedido
+
+------------------------------------------------------------------------
+
+Comando AS:
+Crea columnas temporales usando un alias
+
+Ejemplo:
+select sum(monto) from pedido AS MontoTotal
+
+------------------------------------------------------------------------
+
+GROUP BY: (checar)
+Agrupa registros de una tabla, que tenga una relación, además de que la columna a agrupa tenga coincidencias con la otra tabla
+
+Ejemplo:
+select CLI.nombre, SUM(VE.cantidad) as cant from Clientes CLI JOIN Venta VE ON CLI.ncliente = VE.ncliente group by CLI.nombre
+
+------------------------------------------------------------------------
+
+HAVING:
+Crea una condición a una columna para mostrar los datos si es que esta se cumple
+
+Ejemplo:
+select CLI.nombre, SUM(VE.cantidad) as cant from Clientes CLI JOIN Venta VE ON CLI.ncliente = VE.ncliente group by CLI.nombre having sum(VE.cantidad) > 5
+
+------------------------------------------------------------------------
+
+UNION:
+une los datos de las tablas en una sola tabla
+
+
+(Select * from producto) UNION ALL (select * from clientes)
+
+------------------------------------------------------------------------

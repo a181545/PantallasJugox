@@ -1,0 +1,35 @@
+-------------------------------------------------------------------------------
+
+COUNT:
+Cuenta todos los elementos de una columna o serie de columnas.
+
+Ejemplo:
+Select COUNT(*) AS Cantidad FROM Pedido
+Select COUNT(*) AS Cantidad FROM Pedido WHERE monto > 5000.00
+
+-------------------------------------------------------------------------------
+
+AVG:
+Muestra el promedio de una cantidad determinanda.
+
+Ejemplo:
+Select AVG(precio) AS Promedio FROM Producto
+
+-------------------------------------------------------------------------------
+
+MIN Y MAX:
+Muestra el valor minimo y/o máximo de una consulta, respectivamente.
+
+Ejemplo:
+Select MAX(monto) AS maximo FROM Pedido
+Select MIN(monto) AS minimo FROM Pedido
+
+-------------------------------------------------------------------------------
+
+DISCTINCT:
+Filtra los datos repetidos de una consulta, es decir, los datos se muestran una sola vez
+
+Ejemplo:
+Select DISTINCT num_cliente from Clientes
+
+-------------------------------------------------------------------------------

@@ -1,0 +1,23 @@
+conectar la base de datos a visual studio windows forms:
+
+usar las librerias: using System.Data y using System.Data.SqlClient;
+
+Sintaxis 1:
+
+class NombreClase --debe llevar una clase
+{
+	public static SqlConnection NombreConexion()
+	{
+		SqlConnection nom_var = new SqlConnection("SERVER=servidor o computadora;DATABASE=base_datos;Integrated security=true");
+		nom_var.Open();
+		return nom_var;
+	}
+}
+
+para integrarlo en un boton de forms:
+NombreClase.NombreConexion();
+
+Sintaxis 2:
+SqlConnection conexion = new SqlConnection("server=LAPTOP-NA66HVT ; database=Proyecto_PC ; integrated security = true");
+conexion.Open();
+
